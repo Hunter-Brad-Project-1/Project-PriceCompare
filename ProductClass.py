@@ -9,6 +9,8 @@ class Product:
         self.rating = rating
         self.shipPrice = shipPrice
         self.url = url
+    def __lt__(self, other):
+        return self.price + self.shipPrice < other.price + other.shipPrice
     def getPrice(self):
         return self.price
     def getName(self):
