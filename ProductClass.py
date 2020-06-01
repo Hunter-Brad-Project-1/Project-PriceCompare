@@ -8,6 +8,7 @@ class Product:
         self.price = price
         self.rating = rating
         self.shipPrice = shipPrice
+        self.distributor = distributor
         self.url = url
     def __lt__(self, other):
         return self.price + self.shipPrice < other.price + other.shipPrice
@@ -22,4 +23,4 @@ class Product:
     def getTotalPrice(self):
         return self.price + self.shipPrice
     def toString(self):
-        return "Name: " + self.name + "\nPrice: " + str(self.price) + "\nRating: " + str(self.rating) + "\nShipping Price: " + str(self.shipPrice)
+        return "Name: " + self.name + "\nPrice: " + str(self.price) + "\nRating: " + str(self.rating) + "\nShipping Price: " + str(self.shipPrice) + "\nDistributor: " + str(self.distributor)
