@@ -1,9 +1,15 @@
-class Product:
+SORTING_MODE = 1
+#1 - Price + ShippingPrice / 2 - Price / 3 - Rating
 
+class Product:
     price = ""
     rating = 0
     name = ""
-    def __init__(self, name, price, shipPrice, url, rating):
+    shipPrice = 0
+    url = ""
+    rating = 0
+    distributor = ""
+    def __init__(self, name, price, shipPrice, url, rating, distributor = "N/A"):
         self.name = name
         self.price = price
         self.rating = rating
@@ -11,7 +17,13 @@ class Product:
         self.distributor = distributor
         self.url = url
     def __lt__(self, other):
-        return self.price + self.shipPrice < other.price + other.shipPrice
+        if SORTING_MODE == 1:
+            return self.price + self.shipPrice < other.price + other.shipPrice
+        if SORTING_MODE == 2:
+            return self.price < other.price
+        if SORTING_MODE == 3:
+            return self.rating < other.rating
+        return False
     def getPrice(self):
         return self.price
     def getName(self):
