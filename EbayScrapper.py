@@ -21,7 +21,7 @@ def ratingprocess(string):
             break
     if index == -1:
         return 0
-    return float(string[0:index])/5.0
+    return float(string[0:index])
 
 SORTING_MODE = 1
 #1 - Price + ShippingPrice / 2 - Price / 3 - Rating
