@@ -22,7 +22,7 @@ class Product:
         if SORTING_MODE == 2:
             return self.price < other.price
         if SORTING_MODE == 3:
-            return self.rating < other.rating
+            return self.rating > other.rating
         return False
     def getPrice(self):
         return self.price
