@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import sys
 
-def process(string):
+def priceprocess(string):
     index = -1
     if string == "":
         return 0
@@ -10,6 +10,18 @@ def process(string):
         if string[i] == ' ':
             index = i
     return float(string[index+2:])
+
+def ratingprocess(string):
+    index = -1
+    if string == "":
+        return 0
+    for i in range(0, len(string)):
+        if string[i] == ' ':
+            index = i
+            break
+    if index == -1:
+        return 0
+    return float(string[0:index])/5.0
 
 SORTING_MODE = 1
 #1 - Price + ShippingPrice / 2 - Price / 3 - Rating
@@ -80,10 +92,10 @@ for i in range(0, len(listProducts)):
 
         bookRating = bookListing.find(class_="b-starrating")
         if bookRating and bookRating.find(class_="clipped"):
-            bookRating = bookRating.find(class_="clipped").text
+            bookRating = ratingprocess(bookRating.find(class_="clipped").text)
         else:
-            bookRating = "N/A"
-        #bookrating in process, parse from str to int
+            bookRating = 0
+        print(bookRating)
         
         if bookDistributor[0:2] == "by":
             bookDistributor = bookDistributor[3:]
@@ -92,13 +104,13 @@ for i in range(0, len(listProducts)):
         
         bookPrice = 0
         if bookListing.find(class_="s-item__price").text[-1:] != "g":
-            bookPrice = process(bookListing.find(class_="s-item__price").text)
+            bookPrice = priceprocess(bookListing.find(class_="s-item__price").text)
 
         shippingPrice = 0
         if bookListing.find(class_="s-item__shipping s-item__logisticsCost").text[-1:] != "g":
-           shippingPrice = process(bookListing.find(class_="s-item__shipping s-item__logisticsCost").text)            
+           shippingPrice = priceprocess(bookListing.find(class_="s-item__shipping s-item__logisticsCost").text)            
 
-        Products.append(Product(bookName, bookPrice, shippingPrice, bookUrl, 5, bookDistributor))
+        Products.append(Product(bookName, bookPrice, shippingPrice, bookUrl, bookRating, bookDistributor))
         
         countGood += 1
     if countGood == 10:
